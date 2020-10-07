@@ -1,6 +1,6 @@
 TARGET      := regba
 
-CROSS_COMPILE ?= mipsel-linux-
+CROSS_COMPILE ?= mipsel-gcw0-linux-uclibc-
 CC          := $(CROSS_COMPILE)gcc
 STRIP       := $(CROSS_COMPILE)strip
 
@@ -27,10 +27,12 @@ ifneq ($(HAS_MIPS32R2),)
 	DEFS += -DMIPS_32R2
 endif
 
-CFLAGS      := $(SDL_CFLAGS) -mno-abicalls -Wall -Wno-unused-variable \
-               -O2 -fomit-frame-pointer $(DEFS) $(INCLUDE)
+CFLAGS      := $(SDL_CFLAGS) -mplt -mno-shared -Wall -Wno-unused-variable \
+               -fdata-sections -ffunction-sections \
+               -O2 -fno-caller-saves -flto $(DEFS) $(INCLUDE)
 ASFLAGS     := $(CFLAGS) -D__ASSEMBLY__
-LDFLAGS     := $(SDL_LIBS) -lpthread -lz -lm -lpng
+LDFLAGS     := $(CFLAGS) $(SDL_LIBS) -lpthread -lz -lm -lpng -Wl,-gc-sections \
+				-zcommon-page-size=2097152 -zmax-page-size=2097152 -lhugetlbfs
 
 DATA_TO_CLEAN := .opk_data $(TARGET).opk
 
@@ -48,8 +50,9 @@ $(TARGET).opk: $(TARGET)
 	$(CMD)cp -r data .opk_data
 	$(CMD)cp ../../game_config.txt .opk_data
 	$(CMD)cp ../../bios/gba_bios.bin .opk_data
-	$(CMD)cp $< .opk_data/regba
-	$(CMD)$(STRIP) .opk_data/regba
+	$(CMD)cp $< .opk_data/regba.gcw0
+	$(CMD)hugeedit --text --data .opk_data/regba.gcw0
+	$(CMD)$(STRIP) .opk_data/regba.gcw0
 	$(CMD)mksquashfs .opk_data $@ -all-root -noappend -no-exports -no-xattrs -no-progress >/dev/null
 
 # The two below declarations ensure that editing a .c file recompiles only that
