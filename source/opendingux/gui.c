@@ -1177,7 +1177,7 @@ static struct MenuEntry DisplayMenu_FPSCounter = {
 	.ChoiceCount = 2, .Choices = { { "Hide", "hide" }, { "Show", "show" } }
 };
 
-#ifndef NO_SCALING
+#if !NO_SCALING
 static struct MenuEntry PerGameDisplayMenu_ScaleMode = {
 	ENTRY_OPTION("image_size", "Image scaling", &PerGameScaleMode),
 	.ChoiceCount = 9, .Choices = { { "No override", "" }, { "Aspect, fast", "aspect" }, { "Full, fast", "fullscreen" }, { "Aspect, bilinear", "aspect_bilinear" }, { "Full, bilinear", "fullscreen_bilinear" }, { "Aspect, sub-pixel", "aspect_subpixel" }, { "Full, sub-pixel", "fullscreen_subpixel" }, { "None", "original" }, { "Hardware", "hardware" } }
@@ -1211,7 +1211,7 @@ static struct Menu PerGameDisplayMenu = {
 	MENU_PER_GAME,
 	.AlternateVersion = &DisplayMenu,
 	.Entries = { &PerGameDisplayMenu_BootSource, &PerGameDisplayMenu_FPSCounter,
-#ifndef NO_SCALING
+#if !NO_SCALING
 		&PerGameDisplayMenu_ScaleMode,
 #endif
 		&PerGameDisplayMenu_Frameskip, &PerGameDisplayMenu_FastForwardTarget, NULL }
@@ -1220,7 +1220,7 @@ static struct Menu DisplayMenu = {
 	.Parent = &MainMenu, .Title = "Display settings",
 	.AlternateVersion = &PerGameDisplayMenu,
 	.Entries = { &DisplayMenu_BootSource, &DisplayMenu_FPSCounter,
-#ifndef NO_SCALING
+#if !NO_SCALING
 		&DisplayMenu_ScaleMode,
 #endif
 		&DisplayMenu_Frameskip, &DisplayMenu_FastForwardTarget, NULL }

@@ -83,7 +83,7 @@ void init_video()
 
 	GBAScreen = (uint16_t*) GBAScreenSurface->pixels;
 
-#ifdef NO_SCALING
+#if NO_SCALING
 	ScaleMode = unscaled;
 #endif
 }
@@ -1516,7 +1516,7 @@ void ReGBA_RenderScreen(void)
 				gba_render(OutputSurface->pixels, GBAScreen, GBAScreenSurface->pitch, OutputSurface->pitch);
 				break;
 
-#ifdef NO_SCALING
+#if NO_SCALING
 			default:
 				break;
 #else /* NO_SCALING */
