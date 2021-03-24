@@ -1,8 +1,37 @@
+ifeq ($(CONFIG),)
+CONFIGS:=gcw0,lepus,rs90,dingoo
+$(error Please specify CONFIG, possible values: $(CONFIGS))
+endif
+
+ifeq ($(CONFIG),gcw0)
+CROSS_COMPILE ?= /opt/gcw0-toolchain/usr/bin/mipsel-gcw0-linux-uclibc-
+BOARD_DEFS := -DGCW_ZERO -DLOAD_ALL_ROM -DSCREEN_WIDTH=320 -DSCREEN_HEIGHT=240 -DMIPS_32R2
+BOARD_LDFLAGS := -Wl,-zcommon-page-size=2097152 -Wl,-zmax-page-size=2097152 -lhugetlbfs
+else ifeq ($(CONFIG),lepus)
+CROSS_COMPILE ?= /opt/lepus-toolchain/usr/bin/mipsel-lepus-linux-musl-
+BOARD_DEFS := -DGCW_ZERO -DLOAD_ALL_ROM -DSCREEN_WIDTH=320 -DSCREEN_HEIGHT=240
+BOARD_LDFLAGS := -Wl,-zcommon-page-size=2097152 -Wl,-zmax-page-size=2097152 -lhugetlbfs
+else ifeq ($(CONFIG),rs90)
+CROSS_COMPILE ?= /opt/rs90-toolchain/usr/bin/mipsel-rs90-linux-musl-
+BOARD_DEFS := -DRS90 -DUSE_MMAP -DSCREEN_WIDTH=240 -DSCREEN_HEIGHT=160
+BOARD_LDFLAGS := -Wl,-zcommon-page-size=16384 -Wl,-zmax-page-size=16384
+else ifeq ($(CONFIG),dingoo)
+CROSS_COMPILE ?= /opt/opendingux-toolchain/usr/bin/mipsel-linux-
+BOARD_DEFS := -DDINGOO_A320 -DUSE_MMAP -DSCREEN_WIDTH=320 -DSCREEN_HEIGHT=240
+BOARD_LDFLAGS :=
+else
+$(error Invalid config: $(CONFIG))
+endif
+
 TARGET      := regba
 
-CROSS_COMPILE ?= mipsel-gcw0-linux-uclibc-
 CC          := $(CROSS_COMPILE)gcc
 STRIP       := $(CROSS_COMPILE)strip
+HUGEEDIT    := $(dir $(CC))/hugeedit
+
+ifneq ($(wildcard $(HUGEEDIT)),)
+HUGEEDIT_CMD := $(HUGEEDIT) --text --data .opk_data/regba.$(CONFIG)
+endif
 
 SYSROOT     := $(shell $(CC) --print-sysroot)
 SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
@@ -19,20 +48,15 @@ HEADERS     := cheats.h ../common.h ../cpu_common.h ../cpu.h draw.h main.h    \
                imageio.h ../unifont.h od-input.h settings.h
 
 INCLUDE     := -I. -I.. -I../mips
-DEFS        := -DGCW_ZERO -DMIPS_XBURST -DLOAD_ALL_ROM                        \
-               -DSCREEN_WIDTH=320 -DSCREEN_HEIGHT=240                         \
-               -DGIT_VERSION=$(shell git describe --always)
-HAS_MIPS32R2 := $(shell echo | $(CC) -dM -E - |grep _MIPS_ARCH_MIPS32R2)
-ifneq ($(HAS_MIPS32R2),)
-	DEFS += -DMIPS_32R2
-endif
 
-CFLAGS      := $(SDL_CFLAGS) -mplt -mno-shared -Wall -Wno-unused-variable \
-               -fdata-sections -ffunction-sections \
-               -O2 -fno-caller-saves -flto $(DEFS) $(INCLUDE)
+DEFS        := $(BOARD_DEFS) -DMIPS_XBURST -DGIT_VERSION=$(shell git describe --always)
+
+CFLAGS      := $(SDL_CFLAGS) -Wall -Wno-unused-variable -mno-shared -mplt \
+               -fdata-sections -ffunction-sections -flto -O2 -fno-caller-saves \
+               $(DEFS) $(INCLUDE)
 ASFLAGS     := $(CFLAGS) -D__ASSEMBLY__
-LDFLAGS     := $(CFLAGS) $(SDL_LIBS) -lpthread -lz -lm -lpng -Wl,-gc-sections \
-				-zcommon-page-size=2097152 -zmax-page-size=2097152 -lhugetlbfs
+LDFLAGS     := $(CFLAGS) $(SDL_LIBS) -lpthread -lz -lm -lpng \
+               -Wl,-gc-sections $(BOARD_LDFLAGS)
 
 DATA_TO_CLEAN := .opk_data $(TARGET).opk
 
@@ -50,9 +74,9 @@ $(TARGET).opk: $(TARGET)
 	$(CMD)cp -r data .opk_data
 	$(CMD)cp ../../game_config.txt .opk_data
 	$(CMD)cp ../../bios/gba_bios.bin .opk_data
-	$(CMD)cp $< .opk_data/regba.gcw0
-	$(CMD)hugeedit --text --data .opk_data/regba.gcw0
-	$(CMD)$(STRIP) .opk_data/regba.gcw0
+	$(CMD)cp $< .opk_data/regba.$(CONFIG)
+	$(CMD)$(HUGEEDIT_CMD)
+	$(CMD)$(STRIP) .opk_data/regba.$(CONFIG)
 	$(CMD)mksquashfs .opk_data $@ -all-root -noappend -no-exports -no-xattrs -no-progress >/dev/null
 
 # The two below declarations ensure that editing a .c file recompiles only that
