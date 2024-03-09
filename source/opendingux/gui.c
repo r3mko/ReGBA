@@ -525,7 +525,7 @@ static void DisplayErrorBackgroundFunction(struct Menu* ActiveMenu)
 
 static void SavedStateMenuDisplayData(struct Menu* ActiveMenu, struct MenuEntry* ActiveMenuEntry)
 {
-	PrintStringOutline("Preview", COLOR_INACTIVE_TEXT, COLOR_INACTIVE_OUTLINE, OutputSurface->pixels, OutputSurface->pitch, SCREEN_WIDTH - GBA_SCREEN_WIDTH / 2, GetRenderedHeight(" ") * 2, GBA_SCREEN_WIDTH / 2, GetRenderedHeight(" ") + 2, LEFT, TOP);
+	PrintStringOutline("", COLOR_INACTIVE_TEXT, COLOR_INACTIVE_OUTLINE, OutputSurface->pixels, OutputSurface->pitch, SCREEN_WIDTH - GBA_SCREEN_WIDTH / 2, GetRenderedHeight(" ") * 2, GBA_SCREEN_WIDTH / 2, GetRenderedHeight(" ") + 2, LEFT, TOP);
 
 	gba_render_half((uint16_t*) OutputSurface->pixels, (uint16_t*) ActiveMenu->UserData,
 		SCREEN_WIDTH - GBA_SCREEN_WIDTH / 2,
@@ -961,7 +961,7 @@ static void ActionShowVersion(struct Menu** ActiveMenu, uint32_t* ActiveMenuEntr
 {
 	char Text[1024];
 #ifdef GIT_VERSION_STRING
-	sprintf(Text, "ReGBA version %s\nNebuleon/ReGBA commit %s", REGBA_VERSION_STRING, GIT_VERSION_STRING);
+	sprintf(Text, "ReGBA version %s\nr3mko/ReGBA commit %s", REGBA_VERSION_STRING, GIT_VERSION_STRING);
 #else
 	sprintf(Text, "ReGBA version %s", REGBA_VERSION_STRING);
 #endif
@@ -1198,11 +1198,11 @@ static struct MenuEntry DisplayMenu_Frameskip = {
 };
 
 static struct MenuEntry PerGameDisplayMenu_FastForwardTarget = {
-	ENTRY_OPTION("fast_forward_target", "Fast-forward target", &PerGameFastForwardTarget),
+	ENTRY_OPTION("fast_forward_target", ">> target", &PerGameFastForwardTarget),
 	.ChoiceCount = 6, .Choices = { { "No override", "" }, { "2x (~120 FPS)", "2" }, { "3x (~180 FPS)", "3" }, { "4x (~240 FPS)", "4" }, { "5x (~300 FPS)", "5" }, { "6x (~360 FPS)", "6" } }
 };
 static struct MenuEntry DisplayMenu_FastForwardTarget = {
-	ENTRY_OPTION("fast_forward_target", "Fast-forward target", &FastForwardTarget),
+	ENTRY_OPTION("fast_forward_target", ">> target", &FastForwardTarget),
 	.ChoiceCount = 5, .Choices = { { "2x (~120 FPS)", "2" }, { "3x (~180 FPS)", "3" }, { "4x (~240 FPS)", "4" }, { "5x (~300 FPS)", "5" }, { "6x (~360 FPS)", "6" } }
 };
 
@@ -1406,7 +1406,7 @@ static struct Menu HotkeyMenu = {
 // -- Saved States --
 
 static struct MenuEntry SavedStateMenu_SelectedState = {
-	.Kind = KIND_CUSTOM, .Name = "Save slot #", .PersistentName = "",
+	.Kind = KIND_CUSTOM, .Name = "Save slot  ", .PersistentName = "",
 	.Target = &SelectedState,
 	.ChoiceCount = 100,
 	.ButtonLeftFunction = SavedStateSelectionLeft, .ButtonRightFunction = SavedStateSelectionRight,
@@ -1414,17 +1414,17 @@ static struct MenuEntry SavedStateMenu_SelectedState = {
 };
 
 static struct MenuEntry SavedStateMenu_Read = {
-	.Kind = KIND_CUSTOM, .Name = "Load from selected slot",
+	.Kind = KIND_CUSTOM, .Name = "Load",
 	.ButtonEnterFunction = ActionSavedStateRead
 };
 
 static struct MenuEntry SavedStateMenu_Write = {
-	.Kind = KIND_CUSTOM, .Name = "Save to selected slot",
+	.Kind = KIND_CUSTOM, .Name = "Save",
 	.ButtonEnterFunction = ActionSavedStateWrite
 };
 
 static struct MenuEntry SavedStateMenu_Delete = {
-	.Kind = KIND_CUSTOM, .Name = "Delete selected state",
+	.Kind = KIND_CUSTOM, .Name = "Delete",
 	.ButtonEnterFunction = ActionSavedStateDelete
 };
 

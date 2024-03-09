@@ -358,18 +358,22 @@ void sound_timer(FIXED16_16 frequency_step, uint32_t channel)
     uint8_t fifo_length;
 
     if (ds->fifo_top > ds->fifo_base)
+    {
       fifo_length = ds->fifo_top - ds->fifo_base;
+    }
     else
+    {
       fifo_length = ds->fifo_top + (32 - ds->fifo_base);
+    }
 
-      if (fifo_length <= 16)
-      {
-        if (dma[1].direct_sound_channel == channel)
-          dma_transfer(dma + 1);
+    if (fifo_length <= 16)
+    {
+      if (dma[1].direct_sound_channel == channel)
+        dma_transfer(dma + 1);
 
-        if (dma[2].direct_sound_channel == channel)
-          dma_transfer(dma + 2);
-      }
+      if (dma[2].direct_sound_channel == channel)
+        dma_transfer(dma + 2);
+    }
   }
 
 void sound_reset_fifo(uint32_t channel)

@@ -1,5 +1,5 @@
 ifeq ($(CONFIG),)
-CONFIGS:=gcw0,lepus,rs90,dingoo
+CONFIGS:=gcw0,lepus,rs90,rg99
 $(error Please specify CONFIG, possible values: $(CONFIGS))
 endif
 
@@ -15,15 +15,15 @@ else ifeq ($(CONFIG),rs90)
 CROSS_COMPILE ?= /opt/rs90-toolchain/usr/bin/mipsel-rs90-linux-musl-
 BOARD_DEFS := -DRS90 -DUSE_MMAP -DSCREEN_WIDTH=240 -DSCREEN_HEIGHT=160
 BOARD_LDFLAGS := -Wl,-zcommon-page-size=16384 -Wl,-zmax-page-size=16384
-else ifeq ($(CONFIG),dingoo)
-CROSS_COMPILE ?= /opt/opendingux-toolchain/usr/bin/mipsel-linux-
-BOARD_DEFS := -DDINGOO_A320 -DUSE_MMAP -DSCREEN_WIDTH=320 -DSCREEN_HEIGHT=240
-BOARD_LDFLAGS :=
+else ifeq ($(CONFIG),rg99)
+CROSS_COMPILE ?= /opt/rs90-toolchain/usr/bin/mipsel-rs90-linux-musl-
+BOARD_DEFS := -DRS90 -DUSE_MMAP -DSCREEN_WIDTH=320 -DSCREEN_HEIGHT=240
+BOARD_LDFLAGS := -Wl,-zcommon-page-size=16384 -Wl,-zmax-page-size=16384
 else
 $(error Invalid config: $(CONFIG))
 endif
 
-TARGET      := regba
+TARGET      := regba.$(CONFIG)
 
 CC          := $(CROSS_COMPILE)gcc
 STRIP       := $(CROSS_COMPILE)strip
@@ -52,7 +52,7 @@ INCLUDE     := -I. -I.. -I../mips
 DEFS        := $(BOARD_DEFS) -DMIPS_XBURST -DGIT_VERSION=$(shell git describe --always)
 
 CFLAGS      := $(SDL_CFLAGS) -Wall -Wno-unused-variable -mno-shared -mplt \
-               -fdata-sections -ffunction-sections -flto -O2 -fno-caller-saves \
+               -fdata-sections -ffunction-sections -flto=auto -O2 -fno-caller-saves \
                $(DEFS) $(INCLUDE)
 ASFLAGS     := $(CFLAGS) -D__ASSEMBLY__
 LDFLAGS     := $(CFLAGS) $(SDL_LIBS) -lpthread -lz -lm -lpng \
@@ -71,7 +71,8 @@ opk: $(TARGET).opk
 $(TARGET).opk: $(TARGET)
 	$(SUM) "  OPK     $@"
 	$(CMD)rm -rf .opk_data
-	$(CMD)cp -r data .opk_data
+	$(CMD)mkdir .opk_data
+	$(CMD)cp data/default.$(CONFIG).desktop data/manual-* data/regba-* .opk_data
 	$(CMD)cp ../../game_config.txt .opk_data
 	$(CMD)cp ../../bios/gba_bios.bin .opk_data
 	$(CMD)cp $< .opk_data/regba.$(CONFIG)

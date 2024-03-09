@@ -1,6 +1,6 @@
 ReGBA, Emulador de la Game Boy Advance con recompilador
 
-- OpenDingux versión 1.45.5, 2014-08-21 -
+- OpenDingux version 1.45.6, 2024-03-09 -
 
 == Tabla de contenido ==
 1. Selección de ROM
@@ -68,16 +68,16 @@ Este menú es principalmente de interés para los desarrolladores de ReGBA, a ex
 == Archivos ==
 
 - BIOS de GBA -
-ReGBA contiene una BIOS de GBA de código abierto, escrita por Normmatt y derivada del código de VisualBoyAdvance. Su logo es "Normmatt" en un rectángulo redondeado. Funciona con la gran mayoría de los juegos de GBA, pero algunos juegos requieren la BIOS de GBA, escrita por Nintendo, para una mayor compatibilidad. Un volcado de la BIOS de GBA oficial se puede poner en ~/.gpsp/gba_bios.bin (donde ~ representa $HOME) y debe ser exactamente de 16384 bytes. Arrancar juegos desde la BIOS mostrará si la BIOS está puesta en el lugar correcto (si no, se verá "Normmatt").
+ReGBA contiene una BIOS de GBA de código abierto, escrita por Normmatt y derivada del código de VisualBoyAdvance. Su logo es "Normmatt" en un rectángulo redondeado. Funciona con la gran mayoría de los juegos de GBA, pero algunos juegos requieren la BIOS de GBA, escrita por Nintendo, para una mayor compatibilidad. Un volcado de la BIOS de GBA oficial se puede poner en ~/.regba/gba_bios.bin (donde ~ representa $HOME) y debe ser exactamente de 16384 bytes. Arrancar juegos desde la BIOS mostrará si la BIOS está puesta en el lugar correcto (si no, se verá "Normmatt").
 
 - Borde para el modo sin escalado -
-El modo sin escalado permite que cada pixel GBA sea reproducido fielmente al original, con un borde para hacer que parezca más como jugar en una GBA. El borde predeterminado, dibujado por hi-ban, es una GBA SP plateada con las palabras "ReGBA Advanced SP" en la parte inferior, para simbolizar el hecho de que ReGBA es una mejora sobre gpSP y utilizaba pantallas retroiluminadas. Usted puede hacer un borde personalizado en formato PNG y ponerlo en ~/.gpsp/border.png (donde ~ representa $HOME). La imagen debe de tener una resolucion de 320x240, y los 240x160 píxeles centrales pueden contener cualquier cosa.
+El modo sin escalado permite que cada pixel GBA sea reproducido fielmente al original, con un borde para hacer que parezca más como jugar en una GBA. El borde predeterminado, dibujado por hi-ban, es una GBA SP plateada con las palabras "ReGBA Advanced SP" en la parte inferior, para simbolizar el hecho de que ReGBA es una mejora sobre gpSP y utilizaba pantallas retroiluminadas. Usted puede hacer un borde personalizado en formato PNG y ponerlo en ~/.regba/border.png (donde ~ representa $HOME). La imagen debe de tener una resolucion de 320x240, y los 240x160 píxeles centrales pueden contener cualquier cosa.
 
 - Configuración Global -
-La configuración global se guarda en ~/.gpsp/global_config.cfg (donde ~ representa $HOME). Está en un formato clave=valor de texto, con comentarios.
+La configuración global se guarda en ~/.regba/global_config.cfg (donde ~ representa $HOME). Está en un formato clave=valor de texto, con comentarios.
 
 - Datos de Juego -
-Los archivos de datos de juego se guardan con el nombre del archivo que contiene la ROM de GBA, con su extensión cambiada. Si la ROM de GBA se cargó desde un archivo ZIP, los archivos de datos utilizan el nombre del archivo ZIP, y no el nombre del archivo dentro del ZIP. Todos los archivos se guardan en ~/.gpsp (donde ~ representa $HOME).
+Los archivos de datos de juego se guardan con el nombre del archivo que contiene la ROM de GBA, con su extensión cambiada. Si la ROM de GBA se cargó desde un archivo ZIP, los archivos de datos utilizan el nombre del archivo ZIP, y no el nombre del archivo dentro del ZIP. Todos los archivos se guardan en ~/.regba (donde ~ representa $HOME).
 
 - Configuración Individual -
 Los cambios individuales de la configuración para cada juego en particular. Utilizan la extensión ".cfg".
@@ -89,7 +89,7 @@ También conocidas como "SRAM saves", "battery saves" y "flash saves", las parti
 También conocidos como "savestates", estos archivos son específicos de ReGBA. ReGBA/DSTwo: betas 6-15 y versiones 1.43-1.45 y ReGBA/OpenDingux: alphas 10-12 y la versión 1.45, pueden leer el formato de savestate utilizado por la versión que lleva este manual. No se puede leer el formato utilizado por gpSP/PSP, que guarda los punteros en la memoria de la PSP y que corrompería la memoria del emulador cuando está cargado. Los Estados Guardados utilizan las extensiones desde ".s00" (para la ranura #1) hasta ".s99" (para la ranura #100).
 
 - Base de datos de compatibilidad de juegos -
-Un archivo llamado game_config.txt se incluye en ReGBA. Contiene declaraciones de bucles inactivos que se pueden omitir para mejorar el rendimiento, así como las declaraciones de tamaño de los datos guardados que ayudan a algunos juegos de crear datos guardados, o incluso a arrancar. Se pueden añadir declaraciones creando un archivo de igual formato en ~/.gpsp/game_config.txt (donde ~ representa $HOME) y enviar estas declaraciones para su añadirlas en la versión que incluye ReGBA.
+Un archivo llamado game_config.txt se incluye en ReGBA. Contiene declaraciones de bucles inactivos que se pueden omitir para mejorar el rendimiento, así como las declaraciones de tamaño de los datos guardados que ayudan a algunos juegos de crear datos guardados, o incluso a arrancar. Se pueden añadir declaraciones creando un archivo de igual formato en ~/.regba/game_config.txt (donde ~ representa $HOME) y enviar estas declaraciones para su añadirlas en la versión que incluye ReGBA.
 
 == Créditos ==
 Emulador: Exophase, Quasar84, Gladius y otros ( ver el readme original de gpSP ), Nebuleon, Normmatt

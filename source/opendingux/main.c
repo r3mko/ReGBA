@@ -160,8 +160,8 @@ int main(int argc, char *argv[])
 
 	init_video();
 
-  // Copy the user's .gpsp directory into main_path
-  sprintf(main_path, "%s/.gpsp", getenv("HOME"));
+  // Copy the user's .regba directory into main_path
+  sprintf(main_path, "%s/.regba", getenv("HOME"));
   mkdir(main_path, 0755);
 
   ReGBA_LoadSettings("global_config", false);
@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
   load_config_file();
 #endif
 
-	// Try loading the user's .gpsp directory's GBA BIOS first.
+	// Try loading the user's .regba directory's GBA BIOS first.
 	// Fall back on the bundled one.
 	ReGBA_ProgressInitialise(FILE_ACTION_LOAD_BIOS);
 	sprintf(file, "%s/gba_bios.bin", main_path);
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
 		if (load_bios(file) == -1)
 		{
 			ShowErrorScreen("The GBA BIOS was not found in any location. "
-				"You can load one in your home directory's .gpsp "
+				"You can load one in your home directory's .regba "
 				"subdirectory. On this platform, that's:\n%s\nThe file needs "
 				"to be named gba_bios.bin.", main_path);
 
@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
 	init_sdlaudio();
 	init_sound();
 
-	// Try loading a border from the user's .gpsp directory first.
+	// Try loading a border from the user's .regba directory first.
 	// Fall back on the bundled one.
 	sprintf(file, "%s/border.png", main_path);
 	if (!ApplyBorder(file))

@@ -1,6 +1,6 @@
 ReGBA, Recompiling Emulator for the Game Boy Advance
 
-- OpenDingux version 1.45.5, 2014-08-21 -
+- OpenDingux version 1.45.6, 2024-03-09 -
 
 == Table of contents ==
 1. Selecting a ROM
@@ -68,16 +68,16 @@ This menu is mainly of interest to ReGBA developers, except for its ROM Informat
 == Files ==
 
 - GBA BIOS -
-ReGBA bundles an open-source GBA BIOS that is written by Normmatt and derived from the code of VisualBoyAdvance. Its logo is 'Normmatt' in a rounded rectangle. It will run the great majority of GBA games, but some games require the GBA BIOS, as written by Nintendo, for greater compatibility. A dump of the official GBA BIOS can be put at ~/.gpsp/gba_bios.bin (where ~ represents $HOME) and must be exactly 16384 bytes. Booting games from the BIOS will show you whether you put the BIOS at the correct location (if it doesn't, you'll see 'Normmatt').
+ReGBA bundles an open-source GBA BIOS that is written by Normmatt and derived from the code of VisualBoyAdvance. Its logo is 'Normmatt' in a rounded rectangle. It will run the great majority of GBA games, but some games require the GBA BIOS, as written by Nintendo, for greater compatibility. A dump of the official GBA BIOS can be put at ~/.regba/gba_bios.bin (where ~ represents $HOME) and must be exactly 16384 bytes. Booting games from the BIOS will show you whether you put the BIOS at the correct location (if it doesn't, you'll see 'Normmatt').
 
 - Unscaled mode border -
-The unscaled mode allows every GBA pixel to be reproduced faithfully to the original, with a border to make it seem more like playing on a GBA. The default border, drawn by hi-ban, is a silver GBA SP with the words 'ReGBA Advanced SP' at the bottom, to symbolise the fact that ReGBA is an improvement over gpSP and played on backlit screens. You can make a custom border in the PNG format and put it at ~/.gpsp/border.png (where ~ represents $HOME). Its dimensions need to be 320x240, and the middle 240x160 pixels can be anything.
+The unscaled mode allows every GBA pixel to be reproduced faithfully to the original, with a border to make it seem more like playing on a GBA. The default border, drawn by hi-ban, is a silver GBA SP with the words 'ReGBA Advanced SP' at the bottom, to symbolise the fact that ReGBA is an improvement over gpSP and played on backlit screens. You can make a custom border in the PNG format and put it at ~/.regba/border.png (where ~ represents $HOME). Its dimensions need to be 320x240, and the middle 240x160 pixels can be anything.
 
 - Global configuration -
-The global configuration is saved to ~/.gpsp/global_config.cfg (where ~ represents $HOME). It is in a key=value text format with comments.
+The global configuration is saved to ~/.regba/global_config.cfg (where ~ represents $HOME). It is in a key=value text format with comments.
 
 - Per-game data -
-Per-game data files are saved with the name of the file containing the GBA ROM, with their extension replaced. If the GBA ROM was loaded from a ZIP archive, then the data files use the name of the ZIP archive, not the name of the file inside the archive. All files are saved into ~/.gpsp (where ~ represents $HOME).
+Per-game data files are saved with the name of the file containing the GBA ROM, with their extension replaced. If the GBA ROM was loaded from a ZIP archive, then the data files use the name of the ZIP archive, not the name of the file inside the archive. All files are saved into ~/.regba (where ~ represents $HOME).
 
 - Per-game configuration -
 The per-game configuration saves overrides made to the defaults for single games. They use the extension 'cfg'.
@@ -89,7 +89,7 @@ Also known as SRAM saves, battery saves and flash saves, saved data files are mo
 Also known as save states, saved state files are specific to ReGBA. ReGBA/DSTwo, betas 6-15 and versions 1.43-1.45, and ReGBA/OpenDingux, alphas 10-12 and version 1.45, can read the saved state format used by the release you are reading the manual for. It cannot read the format used by gpSP/PSP, which saved pointers into the PSP's memory and would corrupt the emulator's memory when loaded. Saved states use the extensions 's00' (for slot #1) to 's99' (for slot #100).
 
 - Game compatibility database -
-A file called game_config.txt is bundled in ReGBA. It contains declarations of idle loops that can be skipped for enhanced performance, as well as saved data size declarations that help some games create saves, or even boot. You can put declarations in a similarly-formatted file at ~/.gpsp/game_config.txt (where ~ represents $HOME) and submit these declarations for inclusion into the version bundled in ReGBA.
+A file called game_config.txt is bundled in ReGBA. It contains declarations of idle loops that can be skipped for enhanced performance, as well as saved data size declarations that help some games create saves, or even boot. You can put declarations in a similarly-formatted file at ~/.regba/game_config.txt (where ~ represents $HOME) and submit these declarations for inclusion into the version bundled in ReGBA.
 
 == Credits ==
 Emulator: Exophase, Quasar84, Gladius and others (see the original gpSP readme), Nebuleon, Normmatt
