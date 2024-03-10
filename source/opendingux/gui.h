@@ -7,7 +7,7 @@
 #  define GIT_VERSION_STRING STRINGIFY(GIT_VERSION)
 #endif
 
-#define REGBA_VERSION_STRING "1.45.6"
+#define REGBA_VERSION_STRING "1.46.0"
 
 enum MenuEntryKind {
 	KIND_OPTION,

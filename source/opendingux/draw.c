@@ -51,8 +51,7 @@ video_scale_type ScaleMode = scaled_aspect;
 #define PROGRESS_WIDTH 240
 #define PROGRESS_HEIGHT 18
 
-#define NO_SCALING ((SCREEN_WIDTH == GBA_SCREEN_WIDTH) \
-		&& (SCREEN_HEIGHT == GBA_SCREEN_HEIGHT))
+#define NO_SCALING ((SCREEN_WIDTH == GBA_SCREEN_WIDTH) && (SCREEN_HEIGHT == GBA_SCREEN_HEIGHT))
 
 static bool InFileAction = false;
 static enum ReGBA_FileAction CurrentFileAction;
@@ -63,25 +62,29 @@ void init_video()
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) < 0)
 	{
 		printf("Failed to initialize SDL !!\n");
-		return;   // for debug
+		return; // for debug
 		// exit(1);
 	}
 
 	SDL_ShowCursor(SDL_DISABLE);
 	OutputSurface = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16, SDL_HWSURFACE |
 #ifdef SDL_TRIPLEBUF
-		SDL_TRIPLEBUF
+	SDL_TRIPLEBUF);
 #else
-		SDL_DOUBLEBUF
+	SDL_DOUBLEBUF);
 #endif
-		);
+
+#ifdef RS90
+	GBAScreen = (uint16_t*) OutputSurface->pixels;
+#else
 	GBAScreenSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, GBA_SCREEN_WIDTH, GBA_SCREEN_HEIGHT, 16,
-	  GBA_RED_MASK,
-	  GBA_GREEN_MASK,
-	  GBA_BLUE_MASK,
-	  0 /* alpha: none */);
+	GBA_RED_MASK,
+	GBA_GREEN_MASK,
+	GBA_BLUE_MASK,
+	0); /* alpha: none */
 
 	GBAScreen = (uint16_t*) GBAScreenSurface->pixels;
+#endif
 
 #if NO_SCALING
 	ScaleMode = unscaled;
@@ -1353,6 +1356,16 @@ static inline void gba_upscale_bilinear(uint16_t *to, uint16_t *from,
 	}
 }
 
+static inline void gba_render_fast(uint16_t* Dest)
+{
+	uint32_t X;
+	for (X = 0; X < GBA_SCREEN_HEIGHT * GBA_SCREEN_WIDTH * sizeof(uint16_t) / sizeof(uint32_t); X++)
+	{
+		*(uint32_t*) Dest = bgr555_to_rgb565(*(uint32_t*) Dest);
+		Dest += 2;
+	}
+}
+
 static inline void gba_render(uint16_t* Dest, uint16_t* Src,
 	uint32_t SrcPitch, uint32_t DestPitch)
 {
@@ -1513,8 +1526,13 @@ void ReGBA_RenderScreen(void)
 			                  images, acts as unscaled */
 #endif
 			case unscaled:
+			#ifdef RS90
+				gba_render_fast(GBAScreen);
+				break;
+			#else
 				gba_render(OutputSurface->pixels, GBAScreen, GBAScreenSurface->pitch, OutputSurface->pitch);
 				break;
+			#endif
 
 #if NO_SCALING
 			default:
@@ -1928,9 +1946,14 @@ void ReGBA_ProgressFinalise()
 
 void ReGBA_VideoFlip()
 {
+#ifdef RS90
+	SDL_Flip(OutputSurface);
+	GBAScreen = (uint16_t*) OutputSurface->pixels;
+#else
 	if (SDL_MUSTLOCK(OutputSurface))
 		SDL_UnlockSurface(OutputSurface);
 	SDL_Flip(OutputSurface);
 	if (SDL_MUSTLOCK(OutputSurface))
 		SDL_LockSurface(OutputSurface);
+#endif
 }

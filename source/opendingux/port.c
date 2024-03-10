@@ -113,9 +113,11 @@ void ReGBA_DisplayFPS(void)
 	{
 		char line[512];
 		sprintf(line, "%2u/%2u", Stats.RenderedFPS, Stats.EmulatedFPS);
-		// White text, black outline
+	#ifndef RS90
 		ScaleModeUnapplied();
-		PrintStringOutline(line, RGB888_TO_RGB565(255, 255, 255), RGB888_TO_RGB565(0, 0, 0), OutputSurface->pixels, OutputSurface->pitch, 7, 3, OutputSurface->w - 14, OutputSurface->h - 6, LEFT, BOTTOM);
+	#endif
+		// White text, black outline
+		PrintStringOutline(line, RGB888_TO_RGB565(255, 255, 255), RGB888_TO_RGB565(0, 0, 0), OutputSurface->pixels, OutputSurface->pitch, 3, -2, OutputSurface->w, OutputSurface->h, LEFT, BOTTOM);
 	}
 }
 

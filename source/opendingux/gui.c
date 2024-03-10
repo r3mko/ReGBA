@@ -983,11 +983,11 @@ static struct MenuEntry Strut = {
 // -- Debug > Native code stats --
 
 static struct MenuEntry NativeCodeMenu_ROPeak = {
-	ENTRY_DISPLAY("Read-only bytes at peak", &Stats.TranslationBytesPeak[TRANSLATION_REGION_READONLY], TYPE_UINT64)
+	ENTRY_DISPLAY("Read-only bytes peak", &Stats.TranslationBytesPeak[TRANSLATION_REGION_READONLY], TYPE_UINT64)
 };
 
 static struct MenuEntry NativeCodeMenu_RWPeak = {
-	ENTRY_DISPLAY("Writable bytes at peak", &Stats.TranslationBytesPeak[TRANSLATION_REGION_WRITABLE], TYPE_UINT64)
+	ENTRY_DISPLAY("Writable bytes peak", &Stats.TranslationBytesPeak[TRANSLATION_REGION_WRITABLE], TYPE_UINT64)
 };
 
 static struct MenuEntry NativeCodeMenu_ROFlushed = {
