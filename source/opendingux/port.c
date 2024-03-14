@@ -183,7 +183,7 @@ bool ReGBA_GetBackupFilename(char* Result, const char* GamePath)
 	GetFileNameNoExtension(FileNameNoExt, GamePath);
 	if (strlen(main_path) + strlen(FileNameNoExt) + 5 /* / .sav */ > MAX_PATH)
 		return false;
-	sprintf(Result, "%s/%s.sav", main_path, FileNameNoExt);
+	sprintf(Result, "%s/%s/%s.sav", main_path, SAVESTATES_DIR, FileNameNoExt);
 	return true;
 }
 
@@ -199,7 +199,7 @@ bool ReGBA_GetSavedStateFilename(char* Result, const char* GamePath, uint32_t Sl
 	
 	if (strlen(main_path) + strlen(FileNameNoExt) + strlen(SlotNumberString) + 2 /* / . */ > MAX_PATH)
 		return false;
-	sprintf(Result, "%s/%s.s%s", main_path, FileNameNoExt, SlotNumberString);
+	sprintf(Result, "%s/%s/%s.s%s", main_path, SAVESTATES_DIR, FileNameNoExt, SlotNumberString);
 	return true;
 }
 

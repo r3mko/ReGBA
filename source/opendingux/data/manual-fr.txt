@@ -92,12 +92,12 @@ Un fichier nommé game_config.txt est inclus avec ReGBA. Il contient des déclar
 
 == Remerciements ==
 Émulateur: Exophase, Quasar84, Gladius et autres (voir la documentation originale de gpSP), Nebuleon, Normmatt
-Interface utilisateur et élargissement d'image: Nebuleon, JohnnyonFlame, pcercuei
+Interface utilisateur et élargissement d'image: Nebuleon, JohnnyonFlame, pcercuei, r3mko
 BIOS à code source ouvert: Normmatt, développeurs de VisualBoyAdvance
-Illustrations: hi-ban
+Illustrations: hi-ban, r3mko
 
 == Code source ==
 Vous trouverez le tout dernier code source de ReGBA à:
-  https://github.com/Nebuleon/ReGBA
+  https://github.com/r3mko/ReGBA
 Le code est disponible sous la GNU General Public License, version 2 ou ultérieure.
 Les illustrations sont disponibles sous la license Creative Commons Attribution-ShareAlike 3.0.

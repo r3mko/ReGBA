@@ -1406,9 +1406,9 @@ static struct Menu HotkeyMenu = {
 // -- Saved States --
 
 static struct MenuEntry SavedStateMenu_SelectedState = {
-	.Kind = KIND_CUSTOM, .Name = "Save slot  ", .PersistentName = "",
+	.Kind = KIND_CUSTOM, .Name = "Save slot ", .PersistentName = "",
 	.Target = &SelectedState,
-	.ChoiceCount = 100,
+	.ChoiceCount = 99,
 	.ButtonLeftFunction = SavedStateSelectionLeft, .ButtonRightFunction = SavedStateSelectionRight,
 	.DisplayValueFunction = SavedStateSelectionDisplayValue
 };

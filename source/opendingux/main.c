@@ -141,6 +141,7 @@ int main(int argc, char *argv[])
   u32 dispstat;
   char load_filename[512];
   char file[MAX_PATH + 1];
+  char savestates_dir[MAX_PATH + 1];
 
 	// Copy the path of the executable into executable_path
 	if (realpath(argv[0], executable_path) == 0)
@@ -163,6 +164,8 @@ int main(int argc, char *argv[])
   // Copy the user's .regba directory into main_path
   sprintf(main_path, "%s/.regba", getenv("HOME"));
   mkdir(main_path, 0755);
+  sprintf(savestates_dir, "%s/%s", main_path, SAVESTATES_DIR);
+  mkdir(savestates_dir, 0755);
 
   ReGBA_LoadSettings("global_config", false);
 #if 0
