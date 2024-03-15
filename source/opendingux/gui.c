@@ -544,7 +544,7 @@ static void SavedStateSelectionDisplayValue(struct MenuEntry* DrawnMenuEntry, st
 	bool IsActive = (DrawnMenuEntry == ActiveMenuEntry);
 	uint16_t TextColor = IsActive ? COLOR_ACTIVE_TEXT : COLOR_INACTIVE_TEXT;
 	uint16_t OutlineColor = IsActive ? COLOR_ACTIVE_OUTLINE : COLOR_INACTIVE_OUTLINE;
-	PrintStringOutline(Value, TextColor, OutlineColor, OutputSurface->pixels, OutputSurface->pitch, 0, GetRenderedHeight(" ") * (Position + 2), SCREEN_WIDTH - GBA_SCREEN_WIDTH / 2 - 16, GetRenderedHeight(" ") + 2, RIGHT, TOP);
+	PrintStringOutline(Value, TextColor, OutlineColor, OutputSurface->pixels, OutputSurface->pitch, 0, GetRenderedHeight(" ") * (Position + 2), SCREEN_WIDTH - GBA_SCREEN_WIDTH / 2 - 24, GetRenderedHeight(" ") + 2, RIGHT, TOP);
 }
 
 static void SavedStateUpdatePreview(struct Menu* ActiveMenu)
@@ -1004,7 +1004,7 @@ static struct Menu NativeCodeMenu = {
 };
 
 static struct MenuEntry DebugMenu_NativeCode = {
-	ENTRY_SUBMENU("Native code statistics...", &NativeCodeMenu)
+	ENTRY_SUBMENU("Native code statistics", &NativeCodeMenu)
 };
 
 // -- Debug > Metadata stats --
@@ -1043,7 +1043,7 @@ static struct Menu MetadataMenu = {
 };
 
 static struct MenuEntry DebugMenu_Metadata = {
-	ENTRY_SUBMENU("Metadata clear statistics...", &MetadataMenu)
+	ENTRY_SUBMENU("Metadata clear statistics", &MetadataMenu)
 };
 
 // -- Debug > Execution stats --
@@ -1088,7 +1088,7 @@ static struct Menu ExecutionMenu = {
 };
 
 static struct MenuEntry DebugMenu_Execution = {
-	ENTRY_SUBMENU("Execution statistics...", &ExecutionMenu)
+	ENTRY_SUBMENU("Execution statistics", &ExecutionMenu)
 };
 
 // -- Debug > Code reuse stats --
@@ -1116,7 +1116,7 @@ static struct Menu ReuseMenu = {
 };
 
 static struct MenuEntry DebugMenu_Reuse = {
-	ENTRY_SUBMENU("Code reuse statistics...", &ReuseMenu)
+	ENTRY_SUBMENU("Code reuse statistics", &ReuseMenu)
 };
 #endif
 
@@ -1138,11 +1138,11 @@ static struct Menu ROMInfoMenu = {
 };
 
 static struct MenuEntry DebugMenu_ROMInfo = {
-	ENTRY_SUBMENU("ROM information...", &ROMInfoMenu)
+	ENTRY_SUBMENU("ROM information", &ROMInfoMenu)
 };
 
 static struct MenuEntry DebugMenu_VersionInfo = {
-	.Kind = KIND_CUSTOM, .Name = "ReGBA version information...",
+	.Kind = KIND_CUSTOM, .Name = "ReGBA version information",
 	.ButtonEnterFunction = &ActionShowVersion
 };
 
@@ -1438,32 +1438,32 @@ static struct Menu SavedStateMenu = {
 // -- Main Menu --
 
 static struct MenuEntry PerGameMainMenu_Display = {
-	ENTRY_SUBMENU("Display settings...", &PerGameDisplayMenu)
+	ENTRY_SUBMENU("Display settings", &PerGameDisplayMenu)
 };
 static struct MenuEntry MainMenu_Display = {
-	ENTRY_SUBMENU("Display settings...", &DisplayMenu)
+	ENTRY_SUBMENU("Display settings", &DisplayMenu)
 };
 
 static struct MenuEntry PerGameMainMenu_Input = {
-	ENTRY_SUBMENU("Input settings...", &PerGameInputMenu)
+	ENTRY_SUBMENU("Input settings", &PerGameInputMenu)
 };
 static struct MenuEntry MainMenu_Input = {
-	ENTRY_SUBMENU("Input settings...", &InputMenu)
+	ENTRY_SUBMENU("Input settings", &InputMenu)
 };
 
 static struct MenuEntry PerGameMainMenu_Hotkey = {
-	ENTRY_SUBMENU("Hotkeys...", &PerGameHotkeyMenu)
+	ENTRY_SUBMENU("Hotkeys", &PerGameHotkeyMenu)
 };
 static struct MenuEntry MainMenu_Hotkey = {
-	ENTRY_SUBMENU("Hotkeys...", &HotkeyMenu)
+	ENTRY_SUBMENU("Hotkeys", &HotkeyMenu)
 };
 
 static struct MenuEntry MainMenu_SavedStates = {
-	ENTRY_SUBMENU("Saved states...", &SavedStateMenu)
+	ENTRY_SUBMENU("Saved states", &SavedStateMenu)
 };
 
 static struct MenuEntry MainMenu_Debug = {
-	ENTRY_SUBMENU("Performance and debugging...", &DebugMenu)
+	ENTRY_SUBMENU("Performance and debugging", &DebugMenu)
 };
 
 static struct MenuEntry MainMenu_Reset = {
