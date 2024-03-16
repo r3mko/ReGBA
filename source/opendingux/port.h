@@ -27,10 +27,15 @@ typedef struct od_port_file_data FILE_TAG_TYPE;
 
 typedef struct timespec timespec;
 
+#ifdef RS90
+#define READONLY_CODE_CACHE_SIZE          (4 * 1024 * 1024)
+#define WRITABLE_CODE_CACHE_SIZE          (1 * 1024 * 1024)
+#else
 /* Tuning parameters for the GCW Zero version of gpSP */
 /* Its processor is an Ingenic JZ4770 at 1000 MHz with 256..512 MiB of RAM */
 #define READONLY_CODE_CACHE_SIZE          (4 * 1024 * 1024)
 #define WRITABLE_CODE_CACHE_SIZE          (4 * 1024 * 1024)
+#endif
 /* The following parameter needs to be at least enough bytes to hold
  * the generated code for the largest instruction on your platform.
  * In most cases, that will be the ARM instruction
