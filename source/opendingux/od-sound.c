@@ -93,20 +93,10 @@ void feed_buffer(void *udata, Uint8 *buffer, int len)
 	}
 	Samples -= Requested - Requested / 2;
 
-	// If we skipped sound, dampen the transition between the two halves.
+	// If we skipped sound, be quiet.
 	if (Skipped)
 	{
-		for (i = 0; i < DAMPEN_SAMPLE_COUNT; i++)
-		{
-			uint_fast8_t j;
-			for (j = 0; j < 2; j++)
-			{
-				stream[Requested / 2 + i * 2 + j] = (int16_t) (
-					  (int32_t) stream[Requested / 2 - i * 2 - 2 + j] * (DAMPEN_SAMPLE_COUNT - (int32_t) i) / (DAMPEN_SAMPLE_COUNT + 1)
-					+ (int32_t) stream[Requested / 2 + i * 2 + j] * ((int32_t) i + 1) / (DAMPEN_SAMPLE_COUNT + 1)
-					);
-			}
-		}
+		memset(stream, 0, len);
 	}
 }
 

@@ -1,5 +1,5 @@
-#ifndef GCWSOUND_H_
-#define GCWSOUND_H_
+#ifndef OD_SOUND_H_
+#define OD_SOUND_H_
 
 void init_sdlaudio();
 
@@ -16,4 +16,4 @@ extern volatile unsigned int AudioFastForwarded;
 
 #define OUTPUT_FREQUENCY_DIVISOR ((int) (SOUND_FREQUENCY) / (OUTPUT_SOUND_FREQUENCY))
 
-#endif /* GCWSOUND_H_ */
+#endif /* OD_SOUND_H_ */
