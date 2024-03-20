@@ -1594,7 +1594,7 @@ void ReGBA_RenderScreen(void)
 		}
 	}
 
-	if (ReGBA_GetAudioSamplesAvailable() < AUDIO_OUTPUT_BUFFER_SIZE * 2 * OUTPUT_FREQUENCY_DIVISOR)
+	if (ReGBA_GetAudioSamplesAvailable() <= AUDIO_OUTPUT_BUFFER_SIZE * 2 * OUTPUT_FREQUENCY_DIVISOR)
 	{
 		if (AudioFrameskip < MAX_AUTO_FRAMESKIP)
 			AudioFrameskip++;
@@ -1607,7 +1607,10 @@ void ReGBA_RenderScreen(void)
 		{
 			SufficientAudioControl = 0;
 			if (AudioFrameskip > 0)
-				AudioFrameskip--;
+			{
+				AudioFrameskip = 0;
+				AudioFrameskipControl = 0;
+			}
 		}
 	}
 
