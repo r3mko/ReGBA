@@ -19,14 +19,14 @@
 
 #include "common.h"
 
-#define COLOR_BACKGROUND       RGB888_TO_RGB565(  0,  48,   0)
+#define COLOR_BACKGROUND       RGB888_TO_RGB565(  0,  48,  48)
 #define COLOR_ERROR_BACKGROUND RGB888_TO_RGB565( 64,   0,   0)
-#define COLOR_INACTIVE_TEXT    RGB888_TO_RGB565( 64, 160,  64)
+#define COLOR_INACTIVE_TEXT    RGB888_TO_RGB565(128, 128, 128)
 #define COLOR_INACTIVE_OUTLINE RGB888_TO_RGB565(  0,   0,   0)
 #define COLOR_ACTIVE_TEXT      RGB888_TO_RGB565(255, 255, 255)
 #define COLOR_ACTIVE_OUTLINE   RGB888_TO_RGB565(  0,   0,   0)
 #define COLOR_TITLE_TEXT       RGB888_TO_RGB565(128, 255, 128)
-#define COLOR_TITLE_OUTLINE    RGB888_TO_RGB565(  0,  96,   0)
+#define COLOR_TITLE_OUTLINE    RGB888_TO_RGB565(  0,  96,  96)
 #define COLOR_ERROR_TEXT       RGB888_TO_RGB565(255,  64,  64)
 #define COLOR_ERROR_OUTLINE    RGB888_TO_RGB565( 80,   0,   0)
 
@@ -1214,7 +1214,11 @@ static struct Menu PerGameDisplayMenu = {
 #if !NO_SCALING
 		&PerGameDisplayMenu_ScaleMode,
 #endif
-		&PerGameDisplayMenu_Frameskip, &PerGameDisplayMenu_FastForwardTarget, NULL }
+		&PerGameDisplayMenu_Frameskip,
+#ifndef RS90
+		&PerGameDisplayMenu_FastForwardTarget,
+#endif
+		NULL }
 };
 static struct Menu DisplayMenu = {
 	.Parent = &MainMenu, .Title = "Display settings",
@@ -1223,7 +1227,11 @@ static struct Menu DisplayMenu = {
 #if !NO_SCALING
 		&DisplayMenu_ScaleMode,
 #endif
-		&DisplayMenu_Frameskip, &DisplayMenu_FastForwardTarget, NULL }
+		&DisplayMenu_Frameskip,
+#ifndef RS90
+		&DisplayMenu_FastForwardTarget,
+#endif
+		NULL }
 };
 
 // -- Input Settings --
@@ -1388,7 +1396,11 @@ static struct Menu PerGameHotkeyMenu = {
 	.Parent = &PerGameMainMenu, .Title = "Hotkeys",
 	MENU_PER_GAME,
 	.AlternateVersion = &HotkeyMenu,
-	.Entries = { &Strut, &PerGameHotkeyMenu_FastForward, &PerGameHotkeyMenu_FastForwardToggle, &PerGameHotkeyMenu_QuickLoadState, &PerGameHotkeyMenu_QuickSaveState, NULL }
+	.Entries = { &Strut,
+#ifndef RS90
+	&PerGameHotkeyMenu_FastForward, &PerGameHotkeyMenu_FastForwardToggle,
+#endif
+	&PerGameHotkeyMenu_QuickLoadState, &PerGameHotkeyMenu_QuickSaveState, NULL }
 };
 static struct Menu HotkeyMenu = {
 	.Parent = &MainMenu, .Title = "Hotkeys",
@@ -1399,8 +1411,10 @@ static struct Menu HotkeyMenu = {
 #else
 		&Strut,
 #endif
-		&HotkeyMenu_FastForward, &HotkeyMenu_FastForwardToggle, &HotkeyMenu_QuickLoadState, &HotkeyMenu_QuickSaveState, NULL
-	}
+#ifndef RS90
+		&HotkeyMenu_FastForward, &HotkeyMenu_FastForwardToggle,
+#endif
+		&HotkeyMenu_QuickLoadState, &HotkeyMenu_QuickSaveState, NULL }
 };
 
 // -- Saved States --

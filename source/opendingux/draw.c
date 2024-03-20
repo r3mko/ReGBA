@@ -1590,7 +1590,7 @@ void ReGBA_RenderScreen(void)
 			uint32_t Quota = AUDIO_OUTPUT_BUFFER_SIZE * 3 * OUTPUT_FREQUENCY_DIVISOR + (uint32_t) (FramesAhead * (SOUND_FREQUENCY / 59.73f));
 			if (ReGBA_GetAudioSamplesAvailable() <= Quota)
 				break;
-			usleep(1000);
+			SDL_Delay(1);
 		}
 	}
 
@@ -1613,8 +1613,8 @@ void ReGBA_RenderScreen(void)
 
 	if (FastForwardFrameskip > 0 && FastForwardFrameskipControl > 0)
 	{
-		FastForwardFrameskipControl--;
 		VideoFastForwarded = (VideoFastForwarded + 1) & 0xFF;
+		FastForwardFrameskipControl--;
 	}
 	else
 	{
