@@ -1603,7 +1603,7 @@ void ReGBA_RenderScreen(void)
 	else
 	{
 		SufficientAudioControl++;
-		if (SufficientAudioControl >= 15)
+		if (SufficientAudioControl >= 5)
 		{
 			if (AudioFrameskip > 0)
 			{
