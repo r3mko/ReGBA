@@ -1607,8 +1607,7 @@ void ReGBA_RenderScreen(void)
 		{
 			if (AudioFrameskip > 0)
 			{
-				AudioFrameskip = 0;
-				AudioFrameskipControl = 0;
+				AudioFrameskip--;
 			}
 			SufficientAudioControl = 0;
 		}
