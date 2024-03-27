@@ -8,6 +8,8 @@ rm -rf .multi_opk
 
 # Perpare
 cp -r data .multi_opk
+cp ../../game_config.txt .multi_opk
+cp ../../bios/gba_bios.bin .multi_opk
 
 # Build
 for TARGET in $DEVS
